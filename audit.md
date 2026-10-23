@@ -50,6 +50,6 @@ J'ai extrappoler cette solution pour le champs occurence (hebdo, mensuel, quotid
 - **Qu’est-ce qui fonctionne d’après vos tests ?** 
 Le scenario nominal fonctionne : on peux s'inscrire, créer une tache, une catégorie, les afficher.
 - **Quels problèmes faut-il traiter en premier et pourquoi ?** 
-On peux créer une tache sans avoir
-- **Qu’est-ce qui n’a pas été vérifié ?** [Limites de votre travail]
+On peux créer une tache sans selectionner une catégorie, hors dans le display on fait un foreach categorie, ce qui peux entrainer un bug.
+- **Qu’est-ce qui n’a pas été vérifié ?** la création de catégories, format du password.
 - **Votre avis sur les trois fonctionnalités :** [Quelques lignes justifiées par vos résultats]
