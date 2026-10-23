@@ -8,8 +8,10 @@ Composer 2.5 +
 
 ## 1 Cloner le repository
 ```sh
-git clone https://github.com/mithridatem/projet_todo
+git clone https://github.com/mithridatem/projet_todo.git
+cd project_todo
 ```
+
 ## 2 Créer la base de données avec le script `db.sql`
 
 ## 3 Installer les dépendances :
