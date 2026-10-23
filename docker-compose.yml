@@ -1,0 +1,45 @@
+services:
+  php:
+    build: .
+    volumes:
+      - .:/var/www/html
+    # Installe les dépendances puis lance PHP-FPM ; crée le dossier d'upload
+    command: >
+      sh -c "composer install --no-interaction &&
+      mkdir -p public/assets/img && chmod -R 777 public/assets &&
+      php-fpm"
+    environment:
+      DATABASE_HOST: db:3306
+      DATABASE_NAME: todolist
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - php
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+      # Exécuté automatiquement au premier démarrage (volume vide)
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  db_data:
